@@ -1,1 +1,3 @@
-import django
+name = "Django"
+
+print("Hello", name)
