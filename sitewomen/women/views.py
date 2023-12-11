@@ -1,12 +1,18 @@
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, HttpResponseRedirect
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 from django.urls import reverse
 
 
 # Create your views here.
 
 def index(request: HttpRequest):
-    return HttpResponse('Страница приложения women')
+    return render(request, 'women/index.html')
+
+
+def about(request: HttpRequest):
+    return render(request, 'women/about.html')
+
 
 
 def categories(request: HttpRequest, cat_id):
