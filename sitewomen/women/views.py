@@ -3,16 +3,35 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
 
+menu = ["О сайте", "Добавить статью", "Обратная связь", "Войти"]
+
+
+class MyClass:
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+
 
 # Create your views here.
 
+
 def index(request: HttpRequest):
-    return render(request, 'women/index.html')
+    data = {"title": "О сайте",
+            "menu": menu,
+            "float": 28.75,
+            'lst': [1, 2, "abc", True],
+            'set': {1, 2, 3, 4, 5},
+            "dict": {'key1': 'value1', 'key2': 'value2'},
+            "obj": MyClass(10, 20),
+            }
+    return render(request, 'women/index.html', context=data)
 
 
 def about(request: HttpRequest):
-    return render(request, 'women/about.html')
-
+    data = {"title": "О сайте",
+            "menu": menu,
+            }
+    return render(request, 'women/index.html', context=data)
 
 
 def categories(request: HttpRequest, cat_id):
