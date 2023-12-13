@@ -3,26 +3,26 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
 
-menu = ["О сайте", "Добавить статью", "Обратная связь", "Войти"]
+menu = [{'title': "О сайте", 'url_name': 'about'},
+        {'title': "Добавить статью", 'url_name': 'add_page'},
+        {'title': "Обратная связь", 'url_name': 'contact'},
+        {'title': "Войти", 'url_name': 'login'}
+]
 
-
-class MyClass:
-    def __init__(self, a, b):
-        self.a = a
-        self.b = b
+data_db = [
+    {'id': 1, 'title': 'Анджелина Джоли', 'content': 'Биография Анджелины Джоли', 'is_published': True},
+    {'id': 2, 'title': 'Марго Робби', 'content': 'Биография Марго Робби', 'is_published': False},
+    {'id': 3, 'title': 'Джулия Робертс', 'content': 'Биография Джулия Робертс', 'is_published': True},
+]
 
 
 # Create your views here.
 
 
 def index(request: HttpRequest):
-    data = {"title": "О сайте",
+    data = {"title": "главная страница",
             "menu": menu,
-            "float": 28.75,
-            'lst': [1, 2, "abc", True],
-            'set': {1, 2, 3, 4, 5},
-            "dict": {'key1': 'value1', 'key2': 'value2'},
-            "obj": MyClass(10, 20),
+            "posts": data_db,
             }
     return render(request, 'women/index.html', context=data)
 
@@ -34,21 +34,20 @@ def about(request: HttpRequest):
     return render(request, 'women/index.html', context=data)
 
 
-def categories(request: HttpRequest, cat_id):
-    print(request.GET)
-    return HttpResponse(f'<h1> статьи по категориям </h1><p> id:{cat_id}</p>')
+def show_post(request: HttpRequest, post_id):
+    return HttpResponse(f"Отображение статьи с Id = {post_id}")
 
 
-def categories_by_slug(request, cat_slug):
-    print(request.GET)
-    return HttpResponse(f'<h1> статьи по категориям </h1><p> slug:{cat_slug}</p>')
+def addpage(request: HttpRequest):
+    return HttpResponse("Добавление статьи")
 
 
-def archive(request, year):
-    if year > 2023:
-        uri = reverse('cats', args=('music',))
-        return HttpResponseRedirect(uri)
-    return HttpResponse(f'<h1>Архив по годам </h1><p> year :{year}</p>')
+def contact(request: HttpRequest):
+    return HttpResponse("Обратная связь")
+
+
+def login(request: HttpRequest):
+    return HttpResponse("Авторизация")
 
 
 def page_not_found(request, exception):
